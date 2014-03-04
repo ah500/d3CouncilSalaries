@@ -13,17 +13,18 @@
     var svg = d3.select("#viz")
         .append("svg")
         .attr("width", 2 * (radius + padding))
-        .attr("height", 2 * (radius + padding));    
+        .attr("height", 2 * (radius + padding));
+		
+	var councilerGroup = svg.append("g");
 	
-    svg.append("circle")
+    councilerGroup.append("circle")
         .style("stroke", "black")
         .style("fill", "white")
         .attr("r", radius)
         .attr("cx", radius + padding)
-        .attr("cy", radius + padding)
-		.on("mousedown", animate);
+        .attr("cy", radius + padding);
 
-	svg.append("text")
+	councilerGroup.append("text")
 		.attr("x", radius)
 		.attr("y", radius)
 		.text( "some text")
@@ -33,11 +34,12 @@
 
 function animate() {
     d3.select(this).transition()
-        .duration(1000)
-        .attr("r", 10)
-      .transition()
-        .delay(1000)
-        .attr("r", 40);
+        .duration(2000)
+        .attr("fill", "blue")
+        .transition()
+        .delay(2000)
+        .attr("fill", "transparent");
+
 		};
     
     </script>
