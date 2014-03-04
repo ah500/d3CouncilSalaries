@@ -7,13 +7,13 @@
     <div id="viz"></div>
     <script type="text/javascript">
 
-    var sampleSVG = d3.select("#viz")
-        .append("svg")
-        .attr("width", 5000)
-        .attr("height", 5000);    
-
 	var radius = Math.pow(186167, 0.5)/10;
 	var padding = 10;
+	
+    var sampleSVG = d3.select("#viz")
+        .append("svg")
+        .attr("width", 2 * (radius + padding))
+        .attr("height", 2 * (radius + padding));    
 	
     sampleSVG.append("circle")
         .style("stroke", "black")
