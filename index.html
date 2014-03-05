@@ -19,11 +19,13 @@
 	var salary_range_max_radius = Math.pow(salary_range_max, 0.5)/10;
 	
 	var padding = 10;
+	var svg_radius = Math.max(budget_radius, staffing_budget_radius, salary_radius, salary_range_max_radius);
+	var job_label = "Mark Lloyd	Chief Executive"
 	
     var svg = d3.select("#viz")
         .append("svg")
-        .attr("width", 2 * (salary_radius + padding))
-        .attr("height", 2 * (salary_radius + padding));
+        .attr("width", 2 * (svg_radius + padding))
+        .attr("height", 2 * (svg_radius + padding));
 		
 	var councilerGroup = svg.append("g")
 		.on("mousedown", animate);
@@ -39,7 +41,7 @@
 		.style("opacity", "0")
 		.attr("x", padding)
 		.attr("y", salary_radius)
-		.text( "some text")
+		.text(job_label)
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "20px")
 		.attr("fill", "black");
