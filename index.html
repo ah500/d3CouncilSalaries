@@ -7,13 +7,14 @@
     <div id="viz"></div>
     <script type="text/javascript">
 
-	var radius = Math.pow(186167, 0.5)/10;
+	var salary = 186167
+	var salary_radius = Math.pow(salary, 0.5)/10;
 	var padding = 10;
 	
     var svg = d3.select("#viz")
         .append("svg")
-        .attr("width", 2 * (radius + padding))
-        .attr("height", 2 * (radius + padding));
+        .attr("width", 2 * (salary_radius + padding))
+        .attr("height", 2 * (salary_radius + padding));
 		
 	var councilerGroup = svg.append("g")
 		.on("mousedown", animate);
@@ -21,14 +22,14 @@
     councilerGroup.append("circle")
         .style("stroke", "black")
         .style("fill", "white")
-        .attr("r", radius)
-        .attr("cx", radius + padding)
-        .attr("cy", radius + padding);
+        .attr("r", salary_radius)
+        .attr("cx", salary_radius + padding)
+        .attr("cy", salary_radius + padding);
 
 	councilerGroup.append("text")
 		.style("opacity", "0")
-		.attr("x", radius)
-		.attr("y", radius)
+		.attr("x", padding)
+		.attr("y", salary_radius)
 		.text( "some text")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "20px")
