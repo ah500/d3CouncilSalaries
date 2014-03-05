@@ -6,7 +6,7 @@
 <body>
     <div id="viz"></div>
     <script type="text/javascript">
-	var scale_factor = 50;
+	var scale_factor = 75;
 	var padding = 10;
 	
 	var budget = 460392000
@@ -23,11 +23,11 @@
 	
 	var max_radius = Math.max(budget_radius, staffing_budget_radius, salary_radius, salary_range_max_radius);
 	var job_label = "Mark Lloyd Chief Executive"
-	var job_data = [{"radius" : budget_radius, "fill_colour" : "green"},
-				    {"radius" : staffing_budget_radius, "fill_colour" : "blue"},
-					{"radius" : salary_radius, "fill_colour" : "red"}, 
-					{"radius" : salary_range_min_radius, "fill_colour" : "transparent"},
-					{"radius" : salary_range_max_radius, "fill_colour" : "transparent"}];
+	var job_data = [{"radius" : budget_radius, "fill_colour" : "green", "raw_value" : budget},
+				    {"radius" : staffing_budget_radius, "fill_colour" : "blue", "raw_value" : staffing_budget},
+					{"radius" : salary_radius, "fill_colour" : "red", "raw_value" : salary}, 
+					{"radius" : salary_range_min_radius, "fill_colour" : "transparent", "raw_value" : salary_range_min},
+					{"radius" : salary_range_max_radius, "fill_colour" : "transparent", "raw_value" : salary_range_max}];
 	
     var svg = d3.select("#viz")
         .append("svg")
@@ -45,7 +45,8 @@
         .style("fill", function (data) { return data.fill_colour; })
         .attr("r", function (data) { return data.radius; })
         .attr("cx", max_radius + padding)
-        .attr("cy", max_radius + padding);
+        .attr("cy", max_radius + padding)
+		.append("text").text(function(data){return data.raw_value;});
 
 	job_info.append("text")
 		.style("opacity", "0")
