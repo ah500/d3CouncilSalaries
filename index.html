@@ -22,8 +22,8 @@
 	var salary_range_max_radius = Math.pow(salary_range_max, 0.5)/scale_factor;
 	
 	var max_radius = Math.max(budget_radius, staffing_budget_radius, salary_radius, salary_range_max_radius);
-	var job_label = "Mark Lloyd	Chief Executive"
-	var job_data = [{"radius" : budget_radius, "fill_color" : "green"},
+	var job_label = "Mark Lloyd Chief Executive"
+	var job_data = [{"radius" : budget_radius, "fill_colour" : "green"},
 				    {"radius" : staffing_budget_radius, "fill_colour" : "blue"},
 					{"radius" : salary_radius, "fill_colour" : "red"}, 
 					{"radius" : salary_range_min_radius, "fill_colour" : "transparent"},
@@ -42,7 +42,7 @@
         .enter()
         .append("circle")
         .style("stroke", "black")
-        .style("fill", function (data) { return data.fill_color; })
+        .style("fill", function (data) { return data.fill_colour; })
         .attr("r", function (data) { return data.radius; })
         .attr("cx", max_radius + padding)
         .attr("cy", max_radius + padding);
@@ -50,14 +50,14 @@
 	job_info.append("text")
 		.style("opacity", "0")
 		.attr("x", padding)
-		.attr("y", salary_radius)
+		.attr("y", max_radius)
 		.text(job_label)
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "20px")
 		.attr("fill", "black");
 
 function animate() {
-    d3.select(this.childNodes[1]).transition()
+    d3.select(this.childNodes[5]).transition()
         .style("opacity", "1")
         .transition()
         .delay(2000)
