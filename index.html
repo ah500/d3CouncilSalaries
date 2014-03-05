@@ -37,16 +37,26 @@
 	var job_info = svg.append("g")
 		.on("mousedown", animate);
 		
-	job_info.selectAll("circle")
+	var budget_type = job_info.selectAll("circle")
 		.data(job_data)
         .enter()
-        .append("circle")
+		.append("g")
+		.on("mouseover", appear);
+		
+    budget_type.append("circle")
         .style("stroke", "black")
         .style("fill", function (data) { return data.fill_colour; })
         .attr("r", function (data) { return data.radius; })
         .attr("cx", max_radius + padding)
-        .attr("cy", max_radius + padding)
-		.append("text").text(function(data){return data.raw_value;});
+        .attr("cy", max_radius + padding);
+		
+	budget_type.append("text").text(function(data){return data.raw_value;})
+		.style("opacity", "0")
+		.attr("x", 100)
+		.attr("y", 100)
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "20px")
+		.attr("fill", "black");
 
 	job_info.append("text")
 		.style("opacity", "0")
@@ -59,6 +69,15 @@
 
 function animate() {
     d3.select(this.childNodes[5]).transition()
+        .style("opacity", "1")
+        .transition()
+        .delay(2000)
+		.duration(1000)
+        .style("opacity", "0");
+		};
+		
+    function appear() {
+    d3.select(this.childNodes[1]).transition()
         .style("opacity", "1")
         .transition()
         .delay(2000)
