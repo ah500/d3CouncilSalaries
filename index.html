@@ -52,8 +52,8 @@
 		
 	budget_type.append("text").text(function(data){return data.raw_value;})
 		.style("opacity", "0")
-		.attr("x", 100)
-		.attr("y", 100)
+		.attr("x", function (data) { return max_radius - (data.radius/2) + padding; })
+		.attr("y", function (data) { return Math.max(max_radius - data.radius, 20); })
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "20px")
 		.attr("fill", "black");
