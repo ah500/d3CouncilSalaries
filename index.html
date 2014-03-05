@@ -27,17 +27,17 @@
         .attr("width", 2 * (svg_radius + padding))
         .attr("height", 2 * (svg_radius + padding));
 		
-	var councilerGroup = svg.append("g")
+	var job_info = svg.append("g")
 		.on("mousedown", animate);
 	
-    councilerGroup.append("circle")
+    job_info.append("circle")
         .style("stroke", "black")
         .style("fill", "white")
         .attr("r", salary_radius)
         .attr("cx", salary_radius + padding)
         .attr("cy", salary_radius + padding);
 
-	councilerGroup.append("text")
+	job_info.append("text")
 		.style("opacity", "0")
 		.attr("x", padding)
 		.attr("y", salary_radius)
