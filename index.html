@@ -9,66 +9,14 @@
 	var scale_factor = 75;
 	var padding = 10;
 	
-	d3.text("data.csv", parseData);
-   
-	var budget = 460392000
-	var staffing_budget = 108995000
-	var salary = 186167
-	var salary_range_min = 199188
-	var salary_range_max = 180237
-	
-	var budget_radius = Math.pow(budget, 0.5)/scale_factor;
-	var staffing_budget_radius = Math.pow(staffing_budget, 0.5)/scale_factor;
-	var salary_radius = Math.pow(salary, 0.5)/scale_factor;
-	var salary_range_min_radius = Math.pow(salary_range_min, 0.5)/scale_factor;
-	var salary_range_max_radius = Math.pow(salary_range_max, 0.5)/scale_factor;
-	
-	var max_radius = Math.max(budget_radius, staffing_budget_radius, salary_radius, salary_range_max_radius);
-	var job_label = "Mark Lloyd Chief Executive"
-	var job_data = [{"radius" : budget_radius, "fill_colour" : "green", "value" : "£" + budget},
-				    {"radius" : staffing_budget_radius, "fill_colour" : "blue", "value" : "£" + staffing_budget},
-					{"radius" : salary_radius, "fill_colour" : "red", "value" : "£" + salary}, 
-					{"radius" : salary_range_min_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_min},
-					{"radius" : salary_range_max_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_max}];
-	var svg_height = 2 * (max_radius + padding);
+	var svg_height = 1000;
 	
     var svg = d3.select("#viz")
         .append("svg")
         .attr("width", svg_height + 200)
         .attr("height", svg_height);
 		
-	var job_info = svg.append("g")
-		.on("mousedown", animate);
-		
-	var budget_type = job_info.selectAll("circle")
-		.data(job_data)
-        .enter()
-		.append("g")
-		.on("mouseover", appear);
-		
-    budget_type.append("circle")
-        .style("stroke", "black")
-        .style("fill", function (data) { return data.fill_colour; })
-        .attr("r", function (data) { return data.radius; })
-        .attr("cx", max_radius + padding)
-        .attr("cy", max_radius + padding);
-		
-	budget_type.append("text").text(function(data){return data.value;})
-		.style("opacity", "0")
-		.attr("x", function (data) { return max_radius - (data.radius/2) + padding; })
-		.attr("y", function (data) { return Math.max(max_radius - data.radius, 20); })
-		.attr("font-family", "sans-serif")
-		.attr("font-size", "20px")
-		.attr("fill", "black");
-
-	job_info.append("text")
-		.style("opacity", "0")
-		.attr("x", padding)
-		.attr("y", max_radius)
-		.text(job_label)
-		.attr("font-family", "sans-serif")
-		.attr("font-size", "20px")
-		.attr("fill", "black");
+	d3.text("data.csv", parseAndDisplayData);
 		
 	var key = svg.append("g");
 	var key_element_height = 30;
@@ -114,7 +62,7 @@
 		.attr("fill", "black")
 		.text("salary");
 	
-function parseData(unparsedBudgetData) {
+function parseAndDisplayData(unparsedBudgetData) {
 	var dataRows = d3.csv.parseRows(unparsedBudgetData);
 	var council_data = [];
 	
@@ -122,7 +70,11 @@ function parseData(unparsedBudgetData) {
 		var row = dataRows[i];
 		var budget = parseInt(row[4].replace(/\D/g,''), 10);
 		var staffing_budget = parseInt(row[5].replace(/\D/g,''), 10);
-		var salary = parseInt(row[3].replace(/\D/g,''), 10);
+		var salary_dirty = row[3].replace(/\D/g,'');
+		var salary = 0;
+		if (salary_dirty !== "") {
+			salary = parseInt(salary_dirty, 10);
+		}
 		var salary_range_min = parseInt(row[2].split('-')[0].replace(/\D/g,''), 10);
 		var salary_range_max = parseInt(row[2].split('-')[1].replace(/\D/g,''), 10);
 		
@@ -134,15 +86,53 @@ function parseData(unparsedBudgetData) {
 		
 		var max_radius = Math.max(budget_radius, staffing_budget_radius, salary_radius, salary_range_max_radius);
 		var job_label = "Mark Lloyd Chief Executive"
-		var job_data = [{"radius" : budget_radius, "fill_colour" : "green", "value" : "£" + budget},
-						{"radius" : staffing_budget_radius, "fill_colour" : "blue", "value" : "£" + staffing_budget},
-						{"radius" : salary_radius, "fill_colour" : "red", "value" : "£" + salary}, 
-						{"radius" : salary_range_min_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_min},
-						{"radius" : salary_range_max_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_max}];
+		var circle_data = [{"radius" : budget_radius, "fill_colour" : "green", "value" : "£" + budget},
+							{"radius" : staffing_budget_radius, "fill_colour" : "blue", "value" : "£" + staffing_budget},
+							{"radius" : salary_radius, "fill_colour" : "red", "value" : "£" + salary}, 
+							{"radius" : salary_range_min_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_min},
+							{"radius" : salary_range_max_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_max}];
+		var job_data = {"circle_data" : circle_data,
+						"job_label" : job_label,
+						"max_radius" : max_radius};
 						
 		council_data.push(job_data);
 	}
-	return job_data;
+	displayData(council_data[0]);
+};
+
+function displayData(job_data) {
+	var job_info = svg.append("g")
+		.on("mousedown", animate);
+		
+	var budget_type = job_info.selectAll("circle")
+		.data(job_data.circle_data)
+        .enter()
+		.append("g")
+		.on("mouseover", appear);
+		
+    budget_type.append("circle")
+        .style("stroke", "black")
+        .style("fill", function (data) { return data.fill_colour; })
+        .attr("r", function (data) { return data.radius; })
+        .attr("cx", job_data.max_radius + padding)
+        .attr("cy", job_data.max_radius + padding);
+		
+	budget_type.append("text").text(function(data){return data.value;})
+		.style("opacity", "0")
+		.attr("x", function (data) { return job_data.max_radius - (data.radius/2) + padding; })
+		.attr("y", function (data) { return Math.max(job_data.max_radius - data.radius, 20); })
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "20px")
+		.attr("fill", "black");
+
+	job_info.append("text")
+		.style("opacity", "0")
+		.attr("x", padding)
+		.attr("y", job_data.max_radius)
+		.text(job_data.job_label)
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "20px")
+		.attr("fill", "black");
 };
 	
 function animate() {
