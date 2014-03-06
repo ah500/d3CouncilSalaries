@@ -117,8 +117,9 @@ function parseAndDisplayData(unparsedBudgetData) {
 };
 
 function displayData(job_data, offset) {
+	var scale_factor = offset.r / job_data.max_radius;
 	var job_info = svg.append("g")
-		.attr("transform", "translate(" + offset.x + "," + offset.y + ")")
+		.attr("transform", "translate(" + (offset.x - job_data.max_radius) + "," + (offset.y - job_data.max_radius) + ")")
 		.on("mousedown", animate);
 		
 	var budget_type = job_info.selectAll("circle")
@@ -130,7 +131,7 @@ function displayData(job_data, offset) {
     budget_type.append("circle")
         .style("stroke", "black")
         .style("fill", function (data) { return data.fill_colour; })
-        .attr("r", function (data) { return data.radius; })
+        .attr("r", function (data) { return data.radius * scale_factor; })
         .attr("cx", job_data.max_radius + padding)
         .attr("cy", job_data.max_radius + padding);
 		
