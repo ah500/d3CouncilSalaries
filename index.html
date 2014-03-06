@@ -97,11 +97,28 @@ function parseAndDisplayData(unparsedBudgetData) {
 						
 		council_data.push(job_data);
 	}
-	displayData(council_data[0]);
+	var max_radii = {
+	name : "root",
+      children : []
+	  }
+	for (i=0; i < council_data.length; i++)	{
+		max_radii.children.push({radius : council_data[i].max_radius});
+	}
+	var packings = d3.layout.pack()
+		  .value(function(d) { return d.radius; })
+		  .size([1000, 1000])
+		  .nodes(max_radii);
+	
+	packings.shift();
+ 	  
+	for (i=0; i < council_data.length; i++) {		  
+		displayData(council_data[i], packings[i])
+	}
 };
 
-function displayData(job_data) {
+function displayData(job_data, offset) {
 	var job_info = svg.append("g")
+		.attr("transform", "translate(" + offset.x + "," + offset.y + ")")
 		.on("mousedown", animate);
 		
 	var budget_type = job_info.selectAll("circle")
