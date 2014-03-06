@@ -85,7 +85,7 @@ function parseAndDisplayData(unparsedBudgetData) {
 		var salary_range_max_radius = Math.pow(salary_range_max, 0.5)/scale_factor;
 		
 		var max_radius = Math.max(budget_radius, staffing_budget_radius, salary_radius, salary_range_max_radius);
-		var job_label = "Mark Lloyd Chief Executive"
+		var job_label = row[0] + " " + row[1];
 		var circle_data = [{"radius" : budget_radius, "fill_colour" : "green", "value" : "£" + budget},
 							{"radius" : staffing_budget_radius, "fill_colour" : "blue", "value" : "£" + staffing_budget},
 							{"radius" : salary_radius, "fill_colour" : "red", "value" : "£" + salary}, 
@@ -106,7 +106,7 @@ function parseAndDisplayData(unparsedBudgetData) {
 	}
 	var packings = d3.layout.pack()
 		  .value(function(d) { return d.radius; })
-		  .size([1000, 1000])
+		  .size([640, 480])
 		  .nodes(max_radii);
 	
 	packings.shift();
