@@ -140,16 +140,16 @@ function displayData(job_data, offset) {
 		.attr("x", function (data) { return job_data.max_radius - (data.radius * scale_factor/2) + padding; })
 		.attr("y", function (data) { return Math.max(job_data.max_radius - data.radius * scale_factor, 20); })
 		.attr("font-family", "sans-serif")
-		.attr("font-size", "20px")
+		.attr("font-size", "10px")
 		.attr("fill", "black");
 
 	title_group.append("text")
 		.style("opacity", "0")
-		.attr("x", job_data.max_radius)
+		.attr("x", job_data.max_radius - job_data.max_radius * scale_factor * 0.5)
 		.attr("y", job_data.max_radius)
 		.text(job_data.job_label)
 		.attr("font-family", "sans-serif")
-		.attr("font-size", "20px")
+		.attr("font-size", "16px")
 		.attr("fill", "black");
 };
 	
