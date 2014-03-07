@@ -78,19 +78,13 @@ function parseAndDisplayData(unparsedBudgetData) {
 		var salary_range_min = parseInt(row[2].split('-')[0].replace(/\D/g,''), 10);
 		var salary_range_max = parseInt(row[2].split('-')[1].replace(/\D/g,''), 10);
 		
-		var budget_radius = Math.pow(budget, 0.5)/scale_factor;
-		var staffing_budget_radius = Math.pow(staffing_budget, 0.5)/scale_factor;
-		var salary_radius = Math.pow(salary, 0.5)/scale_factor;
-		var salary_range_min_radius = Math.pow(salary_range_min, 0.5)/scale_factor;
-		var salary_range_max_radius = Math.pow(salary_range_max, 0.5)/scale_factor;
-		
-		var max_radius = Math.max(budget_radius, staffing_budget_radius, salary_radius, salary_range_max_radius);
+		var max_radius = Math.max(budget, staffing_budget, salary, salary_range_max);
 		var job_label = row[0] + " " + row[1];
-		var circle_data = [{"radius" : budget_radius, "fill_colour" : "#00c322", "value" : "£" + budget},
-							{"radius" : staffing_budget_radius, "fill_colour" : "#0a67a3", "value" : "£" + staffing_budget},
-							{"radius" : salary_radius, "fill_colour" : "#ff1300", "value" : "£" + salary}, 
-							{"radius" : salary_range_min_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_min},
-							{"radius" : salary_range_max_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_max}];
+		var circle_data = [{"radius" : budget, "fill_colour" : "#00c322", "value" : "£" + budget},
+							{"radius" : staffing_budget, "fill_colour" : "#0a67a3", "value" : "£" + staffing_budget},
+							{"radius" : salary, "fill_colour" : "#ff1300", "value" : "£" + salary}, 
+							{"radius" : salary_range_min, "fill_colour" : "transparent", "value" : "£" + salary_range_min},
+							{"radius" : salary_range_max, "fill_colour" : "transparent", "value" : "£" + salary_range_max}];
 		var job_data = {"circle_data" : circle_data,
 						"job_label" : job_label,
 						"max_radius" : max_radius};
