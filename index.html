@@ -80,7 +80,7 @@ function parseAndDisplayData(unparsedBudgetData) {
 		var salary_range_max = parseInt(row[2].split('-')[1].replace(/\D/g,''), 10);
 		
 		var max_radius = Math.max(budget, staffing_budget, salary, salary_range_max);
-		var job_label = row[0] + " " + row[1];
+		var job_label = row[0];
 		var circle_data = [{"radius" : (budget / scale_factor), "fill_colour" : "#00c322", "value" : "£" + budget},
 							{"radius" : (staffing_budget / scale_factor), "fill_colour" : "#0a67a3", "value" : "£" + staffing_budget},
 							{"radius" : (salary / scale_factor), "fill_colour" : "#ff1300", "value" : "£" + salary}, 
