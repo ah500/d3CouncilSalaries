@@ -18,7 +18,8 @@
 		
 	d3.text("data.csv", parseAndDisplayData);
 		
-	var key = svg.append("g");
+	var key = svg.append("g").
+	attr("transform", "translate(0, 20)");
 	var key_element_height = 30;
 	key.append("rect")
 		.attr("x", svg_height + padding)
@@ -101,14 +102,14 @@ function parseAndDisplayData(unparsedBudgetData) {
 	var packings = d3.layout.pack()
 		.padding(5)
 		.value(function(d) { return d.radius; })
-		.size([800, 800])
+		.size([1000, 600])
 		.nodes(max_radii);
 		
 		var p = this.pack;
 	
 	packings.shift();
  	  
-	for (i=0; i < council_data.length; i++) {		  
+	for (i=council_data.length - 1; i >= 0; i--) {		  
 		displayData(council_data[i], packings[i])
 	}
 };
@@ -129,8 +130,8 @@ function displayData(job_data, offset) {
         .style("stroke", "black")
         .style("fill", function (data) { return data.fill_colour; })
         .attr("r", function (data) { return data.radius * scale_factor; })
-        .attr("cx", job_data.max_radius + padding)
-        .attr("cy", job_data.max_radius + padding);
+        .attr("cx", job_data.max_radius)
+        .attr("cy", job_data.max_radius);
 		
 	budget_type.append("text").text(function(data){return data.value;})
 		.style("opacity", "0")
@@ -142,8 +143,8 @@ function displayData(job_data, offset) {
 
 	job_info.append("text")
 		.style("opacity", "0")
-		.attr("x", padding)
-		.attr("y", job_data.max_radius)
+		.attr("x", "30")
+		.attr("y", "0")
 		.text(job_data.job_label)
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "20px")
