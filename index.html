@@ -6,7 +6,7 @@
 <body>
     <div id="viz"></div>
     <script type="text/javascript">
-	var scale_factor = 75;
+	var scale_factor = 10000;
 	var padding = 10;
 	
 	var svg_height = 1000;
@@ -80,14 +80,14 @@ function parseAndDisplayData(unparsedBudgetData) {
 		
 		var max_radius = Math.max(budget, staffing_budget, salary, salary_range_max);
 		var job_label = row[0] + " " + row[1];
-		var circle_data = [{"radius" : budget, "fill_colour" : "#00c322", "value" : "£" + budget},
-							{"radius" : staffing_budget, "fill_colour" : "#0a67a3", "value" : "£" + staffing_budget},
-							{"radius" : salary, "fill_colour" : "#ff1300", "value" : "£" + salary}, 
-							{"radius" : salary_range_min, "fill_colour" : "transparent", "value" : "£" + salary_range_min},
-							{"radius" : salary_range_max, "fill_colour" : "transparent", "value" : "£" + salary_range_max}];
+		var circle_data = [{"radius" : (budget / scale_factor), "fill_colour" : "#00c322", "value" : "£" + budget},
+							{"radius" : (staffing_budget / scale_factor), "fill_colour" : "#0a67a3", "value" : "£" + staffing_budget},
+							{"radius" : (salary / scale_factor), "fill_colour" : "#ff1300", "value" : "£" + salary}, 
+							{"radius" : (salary_range_min / scale_factor), "fill_colour" : "transparent", "value" : "£" + salary_range_min},
+							{"radius" : (salary_range_max / scale_factor), "fill_colour" : "transparent", "value" : "£" + salary_range_max}];
 		var job_data = {"circle_data" : circle_data,
 						"job_label" : job_label,
-						"max_radius" : max_radius};
+						"max_radius" : (max_radius  / scale_factor)};
 						
 		council_data.push(job_data);
 	}
