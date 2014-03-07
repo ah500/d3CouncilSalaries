@@ -105,9 +105,12 @@ function parseAndDisplayData(unparsedBudgetData) {
 		max_radii.children.push({radius : council_data[i].max_radius});
 	}
 	var packings = d3.layout.pack()
-		  .value(function(d) { return d.radius; })
-		  .size([800, 800])
-		  .nodes(max_radii);
+		.padding(5)
+		.value(function(d) { return d.radius; })
+		.size([800, 800])
+		.nodes(max_radii);
+		
+		var p = this.pack;
 	
 	packings.shift();
  	  
