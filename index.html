@@ -23,7 +23,7 @@
 	key.append("rect")
 		.attr("x", svg_height + padding)
 		.attr("y", padding)
-		.attr("fill", "green")
+		.attr("fill", "#00c322")
 		.attr("width", 30)
 		.attr("height", 30);
 	key.append("text")
@@ -37,7 +37,7 @@
 	key.append("rect")
 		.attr("x", svg_height + padding)
 		.attr("y", padding + key_element_height + padding)
-		.attr("fill", "blue")
+		.attr("fill", "#0a67a3")
 		.attr("width", 30)
 		.attr("height", 30);
 	key.append("text")
@@ -51,7 +51,7 @@
 	key.append("rect")
 		.attr("x", svg_height + padding)
 		.attr("y", padding + key_element_height + padding + key_element_height + padding)
-		.attr("fill", "red")
+		.attr("fill", "#ff1300")
 		.attr("width", 30)
 		.attr("height", 30);
 		key.append("text")
@@ -86,9 +86,9 @@ function parseAndDisplayData(unparsedBudgetData) {
 		
 		var max_radius = Math.max(budget_radius, staffing_budget_radius, salary_radius, salary_range_max_radius);
 		var job_label = row[0] + " " + row[1];
-		var circle_data = [{"radius" : budget_radius, "fill_colour" : "green", "value" : "£" + budget},
-							{"radius" : staffing_budget_radius, "fill_colour" : "blue", "value" : "£" + staffing_budget},
-							{"radius" : salary_radius, "fill_colour" : "red", "value" : "£" + salary}, 
+		var circle_data = [{"radius" : budget_radius, "fill_colour" : "#00c322", "value" : "£" + budget},
+							{"radius" : staffing_budget_radius, "fill_colour" : "#0a67a3", "value" : "£" + staffing_budget},
+							{"radius" : salary_radius, "fill_colour" : "#ff1300", "value" : "£" + salary}, 
 							{"radius" : salary_range_min_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_min},
 							{"radius" : salary_range_max_radius, "fill_colour" : "transparent", "value" : "£" + salary_range_max}];
 		var job_data = {"circle_data" : circle_data,
