@@ -117,10 +117,12 @@ function parseAndDisplayData(unparsedBudgetData) {
 function displayData(job_data, offset) {
 	var scale_factor = offset.r / job_data.max_radius;
 	var job_info = svg.append("g")
-		.attr("transform", "translate(" + (offset.x - job_data.max_radius) + "," + (offset.y - job_data.max_radius) + ")")
+		.attr("transform", "translate(" + (offset.x - job_data.max_radius) + "," + (offset.y - job_data.max_radius) + ")");
+		
+	var title_group = job_info.append("g")
 		.on("mousedown", animate);
 		
-	var budget_type = job_info.selectAll("circle")
+	var budget_type = title_group.selectAll("circle")
 		.data(job_data.circle_data)
         .enter()
 		.append("g")
@@ -141,10 +143,10 @@ function displayData(job_data, offset) {
 		.attr("font-size", "20px")
 		.attr("fill", "black");
 
-	job_info.append("text")
+	title_group.append("text")
 		.style("opacity", "0")
-		.attr("x", "30")
-		.attr("y", "0")
+		.attr("x", job_data.max_radius)
+		.attr("y", job_data.max_radius)
 		.text(job_data.job_label)
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "20px")
